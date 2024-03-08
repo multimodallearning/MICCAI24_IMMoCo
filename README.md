@@ -14,7 +14,7 @@ This repository contains the official PyTorch implementation of IM-MoCo: Self-su
 
 ### Requirements
 
-- Python 3.6+
+- Python 3.6+ Al-Haj 
 - PyTorch 1.7.0+
 - torchvision 0.8.0+
 - tensorboard
