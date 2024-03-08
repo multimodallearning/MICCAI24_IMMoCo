@@ -93,3 +93,20 @@ We evaluate the reconstruction quality using the peak signal-to-noise ratio (PSN
 | U-Nets           | 27.8 | 0.92 |
 | AF+              | 28.5 | 0.94 |
 | IM-MoCo          | 30.1 | 0.98 |
+
+## Citation
+
+If you find this work helpful for your research, please cite the following paper:
+
+```
+@inproceedings{IM-MoCo,
+  title={IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations},
+  author={Author 1, Author 2, Author 3},
+  booktitle={MICCAI},
+  year={2024}
+}
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
