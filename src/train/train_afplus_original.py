@@ -1,8 +1,4 @@
 import os
-
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-
 import sys
 
 sys.path.append('src/')
@@ -351,4 +347,4 @@ for epoch in range(EPX):
             metric_buf['psnr'] = psnr_vals.mean()
             torch.save(unet.state_dict(),  'src/model_weights/AFPlus_best.pth')
 
-torch.save(unet.state_dict(), 'src/model_weights/AFPlus_last.pth')
+torch.save(unet.state_dict(), 'src/model_weights/AFPlus.pth')
