@@ -16,4 +16,7 @@ wandb/
 # result files from running the code
 results/
 # Dataset files 
-Data/
+Dataset/
+
+**/model_weights/**
+src/model_weghts/*

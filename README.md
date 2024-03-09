@@ -2,19 +2,19 @@
 
 Official PyTorch implementation of IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations, submitted at MICCAI 2024
 
-[Paper](images/MICCAI24_20240307_final.pdf) | [Supplementary Material](images/MICCAI24_20240307_Supplementary.pdf) | [Project Page]()
+[Paper](files/MICCAI24_20240307_final.pdf) | [Supplementary Material](files/MICCAI24_20240307_Supplementary.pdf) | [Project Page]()
 
 ## Introduction
 
 This repository contains the official PyTorch implementation of IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations. In this work, we propose a self-supervised MRI motion correction method that leverages motion-guided implicit neural representations to learn the motion patterns and correct the motion artifacts in MRI scans. We propose a contrastive learning framework that learns representations of motion artifacts and corrects them using a motion-guided implicit neural representation. Our method outperforms the state-of-the-art methods for MRI motion correction in terms of reconstruction quality and motion correction.
 
-![Images](images/IM-MoCo.png)
+![ ](files/IM-MoCo_arch.png)
 
 ## Installation
 
 ### Requirements
 
-- Python 3.6+ Al-Haj 
+- Python 3.6+
 - PyTorch 1.7.0+
 - torchvision 0.8.0+
 - tensorboard
