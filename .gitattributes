@@ -1,5 +1,0 @@
-src/model_weghts/AFPlus.pth filter=lfs diff=lfs merge=lfs -text
-src/model_weghts/classification_model.pth filter=lfs diff=lfs merge=lfs -text
-src/model_weghts/kLDNet.pth filter=lfs diff=lfs merge=lfs -text
-src/model_weghts/unet_denoising.pth filter=lfs diff=lfs merge=lfs -text
-src/model_weghts/unet_denoising_classification_task.pth filter=lfs diff=lfs merge=lfs -text
