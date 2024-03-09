@@ -5,8 +5,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 import sys
 
-sys.path.append('../')
-sys.path.append('../src')
+sys.path.append('src/')
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -20,7 +19,7 @@ from src.utils.evaluate import dice_coef, iou_coef, metrics_classification
 from src.utils.motion_utils import motion_simulation2D
 
 # initialize wandb
-wandb.init(project="MIDL24_MoCo", group="KLineDetect", name="KLineDetect", mode="online")
+wandb.init(project="MICCAI24_MoCo", group="KLineDetect", name="KLineDetect", mode="online")
 
 
 net = get_unet(in_chans=2, out_chans=1, chans=32, num_pool_layers=4, drop_prob=0.0).cuda()
@@ -43,8 +42,8 @@ tst_bsz = 4
 
 print('Loading data...')
 
-data_train = torch.load('/home/alhajhemidi/storage/staff/ziadalhajhemid/MIDL24_MoCo/Dataset/Brain/t2/train_files/_train_data.pth')
-data_val = torch.load('/home/alhajhemidi/storage/staff/ziadalhajhemid/MIDL24_MoCo/Dataset/Brain/t2/val_files/_val_data.pth')
+data_train = torch.load('Dataset/Brain/t2/train_files/_train_data.pth')
+data_val = torch.load('Dataset/Brain/t2/val_files/_val_data.pth')
 
 k_space_train = data_train['kspace']
 k_space_val = data_val['kspace']
@@ -127,7 +126,7 @@ for i in trange(EPX):
         
         if dice_score > best_dice:
             best_dice = dice_score
-            torch.save(net.state_dict(), f'model_weights/KLineDetect_{EPX}_epochs_v3.pth')
+            torch.save(net.state_dict(), f'src/model_weights/kLDNet.pth')
             print(f'Current dice score: {dice_score:.4f}')
             print("Saved model to file")
         
@@ -137,5 +136,5 @@ for i in trange(EPX):
 plt.plot(F.avg_pool1d(F.avg_pool1d(run_loss.view(1,1,-1),15,stride=3),15,stride=1).squeeze())
 plt.plot(F.avg_pool1d(F.avg_pool1d(val_loss.view(1,1,-1),15,stride=3),15,stride=1).squeeze())
 plt.legend(['train','val'])
-plt.savefig(f'lossWKLineDetect_{EPX}_epochs.png')
+plt.savefig(f'resutls/klDNet/lossWKLineDetect_{EPX}_epochs.png')
 

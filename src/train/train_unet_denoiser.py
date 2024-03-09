@@ -69,7 +69,7 @@ best_ssim_diff = 10.0
 
 config = {'learning_rate': learning_rate, 'batch_size': bsz, 'batch_size_val': bsz_val, 'epochs': EPX, 'Net': {'in_channels': in_channels, 'out_channels': out_channels, 'channels': net_channels, 'num_pool_layers': num_pool_layers, 'norm': norm, 'dropout': dropout}}
 
-wandb.init(project="MIDL24_MoCo", group="ArtRefine", name="ArtRefine", mode="online", config=config)
+wandb.init(project="MICCAI_MoCo", group="ArtRefine", name="ArtRefine", mode="online", config=config)
 
 
 for i in trange(EPX):
@@ -155,7 +155,7 @@ for i in trange(EPX):
             torch.save(net.state_dict(), f'src/model_weights/unet_denoising_best.pth')
             print('Current best SSIM: ', best_ssim)
             
-torch.save(net.state_dict(), f'src/model_weights/unet_denoising_last.pth')          
+torch.save(net.state_dict(), f'src/model_weights/unet_denoising.pth')          
 # plot and example output from the last epoch
 import matplotlib.pyplot as plt
 import numpy as np
