@@ -10,25 +10,33 @@ This repository contains the official PyTorch implementation of IM-MoCo: Self-su
 
 ![ ](files/IM-MoCo_arch.png)
 
+## Example Results
+
+![ ](files/motion_correction_comp.png)
+
 ## Installation
 
 ### Requirements
 
-- Python 3.6+
-- PyTorch 1.7.0+
-- torchvision 0.8.0+
-- tensorboard
+- Python
+- PyTorch
+- torchvision
 - h5py
-- nibabel
-- scikit-learn
-- scipy
 - numpy
 - tqdm
+- scikit-learn
+- scipy
 
-### Install via pip
+### Install via conda/mamba
 
 ```bash
-pip install -r requirements.txt
+ mamba env create -f environment.yaml
+```
+
+For Hash-grid encoding we need to install [tiny-cuda](https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch) in the activated environment as well:
+
+```bash
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 ```
 
 ## Usage
@@ -37,64 +45,7 @@ pip install -r requirements.txt
 
 Please prepare your dataset in the following format:
 
-```
-dataset
-├── train
-│   ├── image
-│   │   ├── 1.h5
-│   │   ├── 2.h5
-│   │   └── ...
-│   └── label
-│       ├── 1.h5
-│       ├── 2.h5
-│       └── ...
-└── val
-    ├── image
-    │   ├── 1.h5
-    │   ├── 2.h5
-    │   └── ...
-    └── label
-        ├── 1.h5
-        ├── 2.h5
-        └── ...
-```
-
-Each h5 file contains a 3D MRI scan in the following format:
-
-```python
-import h5py
-
-with h5py.File('1.h5', 'r') as f:
-    image = f['image'][:]
-```
-
-### Train
-
-```bash
-python train.py
-```
-
-### Test
-
-```bash
-python test.py
-```
-
-## Results
-
-### Reconstruction Quality
-
-We evaluate the reconstruction quality using the peak signal-to-noise ratio (PSNR) and the structural similarity index (SSIM).
-
-| Method           | PSNR | SSIM |
-| ---------------- | ---- | ---- |
-| Motion-Corrupted | 20.3 | 0.78 |
-| AF               | 25.6 | 0.88 |
-| U-Nets           | 27.8 | 0.92 |
-| AF+              | 28.5 | 0.94 |
-| IM-MoCo          | 30.1 | 0.98 |
-
-## Citation
+## Citation (Placeholder)
 
 If you find this work helpful for your research, please cite the following paper:
 
