@@ -13,100 +13,15 @@ import tqdm
 from matplotlib import pyplot as plt
 from torchvision.ops import box_convert
 
-from models.KLineDetect import get_unet
+from src.models.kld_net import get_unet
+from utils.classification_utils import (
+    evaluate_patches,
+    extract_patches,
+    pixel_coords_to_normalized,
+)
 from utils.data_utils import FFT, IFFT
+from utils.losses import GradientEntropyLoss
 from utils.motion_utils import extract_movement_groups
-
-
-class GradientEntropyLoss(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-    def entropy(self, x):
-        return -torch.sum(torch.mul(x, torch.log(x + 1e-24)))
-
-    def forward(self, x):
-
-        # loss = 0
-        # for x in [x.real, x.imag]:
-        dx = (x[:, :-1] - x[:, 1:]).abs()
-        dy = ((x[:-1, :] - x[1:, :])).abs()
-
-        # pad the gradient
-        dx = F.pad(dx, (0, 1, 0, 0), mode="constant", value=0)
-        dy = F.pad(dy, (0, 0, 0, 1), mode="constant", value=0)
-
-        gradient = dx + dy
-
-        loss = self.entropy(gradient)
-
-        return loss
-
-
-def extract_patches(images, points, patch_size=32):
-    """
-    Extract patches from a point cloud
-    :param images: torch.Tensor (B, C, H, W)
-    :param points: torch.Tensor (B, N, 3)
-    :param patch_size: int
-    :return: torch.Tensor (B*patches, C, patch_size, patch_size)
-    """
-
-    size = (1, 1, patch_size, patch_size)
-    grid = (
-        F.affine_grid(
-            torch.eye(2, 3).unsqueeze(0) * 0.2, size=size, align_corners=False
-        ).view(1, 1, -1, 2)
-        + points.unsqueeze(0).unsqueeze(2)
-    ).to(images.device)
-
-    patches = F.grid_sample(images.float(), grid.float(), align_corners=True).view(
-        -1, images.shape[1], patch_size, patch_size
-    )
-
-    return patches
-
-
-def pixel_coords_to_normalized(coords, im_size):
-    """
-    Convert coordinates from image format to bounding box format
-    """
-    x, y = coords
-    x = x / im_size[1]
-    y = y / im_size[0]
-    return x, y
-
-
-def evaluate_patches(image1, image2, boxes):
-    from utils.evaluate import calmetric2D
-
-    if len(boxes) == 0:
-        return calmetric2D(image1, image2)
-
-    metrics = {}
-    psnrs = []
-    ssims = []
-    rmses = []
-    haarpsis = []
-
-    patches_1 = extract_patches(image1[None, None], torch.stack(boxes), patch_size=124)
-    patches_2 = extract_patches(image2[None, None], torch.stack(boxes), patch_size=124)
-
-    for i in range(patches_1.shape[0]):
-
-        psnr, ssim, haarpsi, rmse = calmetric2D(patches_1[i][None], patches_2[i][None])
-
-        psnrs.append(psnr)
-        ssims.append(ssim)
-        rmses.append(rmse)
-        haarpsis.append(haarpsi)
-
-    metrics["ssim"] = torch.mean(torch.tensor(ssims))
-    metrics["psnr"] = torch.mean(torch.tensor(psnrs))
-    metrics["haarpsi"] = torch.mean(torch.tensor(haarpsis))
-    metrics["rmse"] = torch.mean(torch.tensor(rmses))
-
-    return metrics
 
 
 class ClearCache:

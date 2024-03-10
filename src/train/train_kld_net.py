@@ -9,7 +9,7 @@ import torch.nn.functional as F
 from tqdm import trange
 
 import wandb
-from src.models.KLineDetect import get_unet
+from src.models.kld_net import get_unet
 from src.utils.data_utils import FFT, IFFT
 from src.utils.evaluate import dice_coef, iou_coef, metrics_classification
 from src.utils.motion_utils import motion_simulation2D

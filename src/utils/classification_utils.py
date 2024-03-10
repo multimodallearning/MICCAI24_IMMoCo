@@ -154,7 +154,7 @@ def convert_Alldataset_to_yolo2(
 
 def create_and_split_data():
 
-    annotation_path_train = "Dataset/Annotations/brain_filtered.csv"
+    annotation_path_train = "Annotations/brain_filtered.csv"
     fastmri_path_train = "Dataset/RowData/"
     output_image_path_train = "Dataset/ClassificationData/train/images/"
     output_label_path = "Dataset/ClassificationData/train/labels/"

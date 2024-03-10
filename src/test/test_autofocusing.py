@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from tqdm import trange
 
 from models.autofocusing import Autofocusing
-from models.KLineDetect import get_unet
+from src.models.kld_net import get_unet
 from utils.data_utils import IFFT
 from utils.evaluate import calmetric2D
 from utils.losses import GradientEntropyLoss

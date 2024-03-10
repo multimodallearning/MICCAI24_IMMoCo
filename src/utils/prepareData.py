@@ -146,7 +146,7 @@ def preprocess_dataset(path="Dataset/Brain/t2/train_files/_train_data.h5"):
 
 def motion_test_data(path):
     test_data_file = h5py.File(path)
-    "../Dataset/Brain/t2/test_files/_test_data.h5"
+
     scenarios = ["light", "heavy"]
     movements = [np.arange(6, 10), np.arange(16, 20)]
     metrics_all = defaultdict(list)
@@ -218,8 +218,6 @@ def motion_test_data(path):
         # append the metrics to the metrics_all list
         metrics_all[scenario] = metrics
 
-    return data, metrics_all
-
 
 def main():
 
@@ -234,6 +232,28 @@ def main():
     preprocess_dataset(TRAIN_PATH)
     preprocess_dataset(VAL_PATH)
 
-    _, metrics_all = motion_test_data(TEST_PATH)
+    motion_test_data(TEST_PATH)
 
     print()
+
+    scenarios = ["light", "heavy"]
+
+    for scenario in scenarios:
+        path_metrics = TEST_PATH + "/_test_data_" + scenario + ".pth"
+        metrics = torch.load(path_metrics)["metrics"]
+
+        print("Scenario: ", scenario)
+        val_psnr = [d["psnr"] for d in metrics]
+        val_ssim = [[d["ssim"] for d in metrics]]
+        val_haar = [d["haar_psi"] for d in metrics]
+        val_rmse = [[d["rmse"] for d in metrics]]
+
+        val_psnr = np.array(val_psnr)
+        val_ssim = np.array(val_ssim)
+        val_haar = np.array(val_haar)
+        val_rmse = np.array(val_rmse)
+
+        print(f"PSNR: {val_psnr.mean():.2f} \pm {val_psnr.std():.2f}")
+        print(f"SSIM: {val_ssim.mean()*100:.2f} \pm {val_ssim.std()*100:.2f}")
+        print(f"RMSE: {val_rmse.mean()*100:.2f} \pm {val_rmse.std()*100:.2f}")
+        print(f"Haar: {val_haar.mean()*100:.2f} \pm {val_haar.std()*100:.2f}")

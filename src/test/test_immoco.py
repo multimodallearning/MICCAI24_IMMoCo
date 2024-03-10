@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from tqdm import trange
 
 from models.immoco import imcoco_motion_correction
-from models.KLineDetect import get_unet
+from src.models.kld_net import get_unet
 from utils.data_utils import FFT, IFFT
 from utils.evaluate import calmetric2D
 from utils.motion_utils import extract_movement_groups

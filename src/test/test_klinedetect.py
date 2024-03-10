@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import torch
 from tqdm import trange
 
-from models.KLineDetect import get_unet
+from src.models.kld_net import get_unet
 from utils.evaluate import dice_coef, iou_coef, metrics_classification
 
 # load model
