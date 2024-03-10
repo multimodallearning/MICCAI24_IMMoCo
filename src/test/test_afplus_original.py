@@ -24,7 +24,7 @@ metrics_all = []
 from models.unet import Unet
 
 unet = Unet(1, 1, 32, 6, batchnorm=torch.nn.InstanceNorm2d, init_type="none").cuda()
-unet.load_state_dict(torch.load("src/model_weights/AFPlus_best.pth"))
+unet.load_state_dict(torch.load("src/model_weights/AFPlus.pth"))
 unet.eval()
 
 for scenario in scenarioius:
@@ -43,7 +43,7 @@ for scenario in scenarioius:
 
     metrics = []
     for idx_test in trange(batch_test):
-        # try:
+
         k_space_test = kspaces_test[idx_test].view(bsz, channels, H, W).cuda()
         img_motion_test = IFt(k_space_test).abs()
 
@@ -63,8 +63,6 @@ for scenario in scenarioius:
             motion_refined_test_crop.unsqueeze(0).unsqueeze(0),
             image_gt_crop.unsqueeze(0).unsqueeze(0),
         )
-        # psnr_array, ssim_array, haar_psi_array, rmse_array
-        # psnr_test, ssim_test, haar_psi_test, rmse_test = calmetric2D(motion_refined_test.unsqueeze(0).unsqueeze(0), image_gt.unsqueeze(0).unsqueeze(0))
 
         metrics.append(
             {
@@ -74,11 +72,6 @@ for scenario in scenarioius:
                 "rmse": rmse_test,
             }
         )
-
-        # except Exception as e:
-        #     print(e)
-        #     print('Error in scenario ' + scenario + ' and image ' + str(idx_test) + ', skipping...')
-        #     continue
 
     fig, axs = plt.subplots(1, 3, figsize=(20, 5))
     axs[0].imshow(img_motion_test.squeeze().cpu().numpy(), cmap="gray")

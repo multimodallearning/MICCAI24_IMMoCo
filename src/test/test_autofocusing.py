@@ -11,41 +11,16 @@ from tqdm import trange
 
 from models.autofocusing import Autofocusing
 from models.KLineDetect import get_unet
-from utils.data_utils import FFT, IFFT, normalize_image
+from utils.data_utils import IFFT
 from utils.evaluate import calmetric2D
+from utils.losses import GradientEntropyLoss
 from utils.motion_utils import extract_movement_groups
-
-
-class GradientEntropyLoss(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-    def entropy(self, x):
-        return -torch.sum(torch.mul(x, torch.log(x + 1e-8)))
-
-    def forward(self, x):
-
-        # loss = 0
-        # for x in [x.real, x.imag]:
-        dx = (x[:, :-1] - x[:, 1:]).abs()
-        dy = ((x[:-1, :] - x[1:, :])).abs()
-
-        # pad the gradient
-        dx = F.pad(dx, (0, 1, 0, 0), mode="constant", value=0)
-        dy = F.pad(dy, (0, 0, 0, 1), mode="constant", value=0)
-
-        gradient = dx + dy
-
-        loss = self.entropy(gradient)
-
-        return loss
-
 
 # load model
 net = get_unet(
     in_chans=2, out_chans=1, chans=32, num_pool_layers=4, drop_prob=0.0
 ).cuda()
-net.load_state_dict(torch.load("src/model_weights/KLineDetect_4200_epochs_v2.pth"))
+net.load_state_dict(torch.load("src/model_weghts/kLDNet.pth"))
 
 if os.path.exists("results/autofocusing") == False:
     os.mkdir("results/autofocusing")

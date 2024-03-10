@@ -23,7 +23,7 @@ class GradientEntropyLoss(nn.Module):
         super().__init__()
 
     def entropy(self, x):
-        return -torch.sum(torch.mul(x, torch.log(x + 1e-8)))
+        return -torch.sum(torch.mul(x, torch.log(x + 1e-24)))
 
     def forward(self, x):
 
@@ -239,7 +239,6 @@ def imcoco_motion_correction(
 
         IMOCO = IMMoCo(masks)
 
-        # data should be between 1 and 16000
         scale = kspace_corr.abs().max()
 
         kspace_motion_norm = kspace_corr.div(scale) * 8000
@@ -312,7 +311,6 @@ def motion_test_detection_data(path, annotations_path):
     net.load_state_dict(torch.load("src/model_weights/kLDNet.pth"))
 
     bboxes = []
-    size = 640
 
     file_names = np.sort(os.listdir(path))
 
@@ -448,5 +446,5 @@ def motion_test_detection_data(path, annotations_path):
 
 scenarios = ["light", "heavy"]
 data, metrics_all = motion_test_detection_data(
-    "Dataset/DetectionData/test/images", "Dataset/DetectionData/test/labels"
+    "Dataset/ClassificationData/test/images", "Dataset/ClassificationData/test/labels"
 )
