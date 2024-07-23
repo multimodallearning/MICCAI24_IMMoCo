@@ -18,4 +18,8 @@ results/
 # Dataset files 
 Dataset/
 
+# pytorch files
+*.pt
+*.pth
+
 
