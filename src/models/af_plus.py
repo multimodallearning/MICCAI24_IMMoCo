@@ -1,8 +1,6 @@
 import math
 
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from torch.fft import fftn, fftshift, ifftn, ifftshift
 
 from utils.pytorch_nufft import nufft

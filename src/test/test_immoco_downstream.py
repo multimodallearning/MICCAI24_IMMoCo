@@ -9,16 +9,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
-import tqdm
-from matplotlib import pyplot as plt
-from torchvision.ops import box_convert
 
 from src.models.kld_net import get_unet
-from utils.classification_utils import (
-    evaluate_patches,
-    extract_patches,
-    pixel_coords_to_normalized,
-)
+from utils.classification_utils import (evaluate_patches)
 from utils.data_utils import FFT, IFFT
 from utils.losses import GradientEntropyLoss
 from utils.motion_utils import extract_movement_groups

@@ -1,14 +1,12 @@
-import os
 import sys
 
 sys.path.append("src/")
 
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.optim as optim
 import wandb
-from piq import SSIMLoss, psnr, ssim
+from piq import psnr, ssim
 from tqdm import trange
 
 from models.unet import Unet

@@ -2,6 +2,7 @@
 import numpy
 import torch
 
+
 def prod(shape):
     """Computes product of shape.
     Args:

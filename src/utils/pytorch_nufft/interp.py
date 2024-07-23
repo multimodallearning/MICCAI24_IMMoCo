@@ -1,5 +1,4 @@
 
-import numpy
 import torch
 
 from utils.pytorch_nufft import util

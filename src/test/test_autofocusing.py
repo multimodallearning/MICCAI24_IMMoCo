@@ -5,8 +5,6 @@ sys.path.append("src/")
 
 import matplotlib.pyplot as plt
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from tqdm import trange
 
 from models.autofocusing import Autofocusing
