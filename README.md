@@ -1,14 +1,16 @@
 # IM-MoCo
 
-Official PyTorch implementation of IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations, submitted at MICCAI 2024
+Official PyTorch implementation of: **Ziad Al-Haj Hemidi**, Christian Weihsbach, Mattias P. heinrich, "*IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations*", **MICCAI** (2024)
 
-[Paper](files/MICCAI24_20240307_final.pdf) | [Supplementary Material](files/MICCAI24_20240307_Supplementary.pdf) | [Project Page]()
+[Paper](files/MICCAI24_20240307_final.pdf) | [Supplementary Material](files/MICCAI24_20240307_Supplementary.pdf)
+
+<!-- | [Project Page]() -->
 
 ## Introduction
 
 In this work, we propose a self-supervised MRI motion correction method that leverages motion-guided implicit neural representations to learn the motion patterns and correct the motion artifacts in MRI scans. The pre-trained klD-Net takes a motion-corrupted k-space
 and outputs a motion mask, which is post-processed to yield a list of movement groups
-indicated by the different colors in $S$ for better visualization. The number of movements
+indicated by the different colors in $S$. The number of movements $n_\textbf{M}$
 and corresponding lines guide the Motion INR and the Image INR. The Image INR
 predicts the motion-free image and the Motion INR is used for guidance by optimizing
 the forward motion yielding a motion-corrupted k-space. The discrepancy between the
@@ -33,14 +35,22 @@ We assess the Image quality of the motion correction compared to state-of-the-ar
 - torchvision
 - h5py
 - numpy
-- tqdm
-- scikit-learn
-- scipy
 
-### Install via conda/mamba
+See the `requirements.txt` file for the full list of dependencies.
+
+### Setup environment
+
+Create a new conda environment and activate it:
 
 ```bash
- mamba env create -f environment.yaml
+ mamba env create -n immoco python=3.10
+ mamba activate immoco
+```
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
 ```
 
 For Hash-grid encoding we need to install [tiny-cuda](https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch) in the activated environment as well:
@@ -62,11 +72,23 @@ python src/utils/prepareData.py
 
 ## Train
 
-For training please refer to the `src/train` folder and for example run:
+For training, please refer to the `src/train` folder and, for example, run:
 
 ```bash
 python src/train/train_kld_net.py
 ```
+
+## Pre-trained Models
+
+Pre-trained models can be downloaded using the download script:
+
+```bash
+python src/utils/download_pretrained_models.py
+```
+
+This will download the pre-trained models to the `models` directory.
+
+Note: IM-MoCo (ours) has no pre-trained weights since it is an instance-based method.
 
 ## Test
 
@@ -80,10 +102,10 @@ python src/test/test_immoco.py
 
 If you find this work helpful for your research, please cite the following paper:
 
-```
+```bibtex
 @inproceedings{IM-MoCo,
   title={IM-MoCo: Self-supervised MRI Motion Correction using Motion-Guided Implicit Neural Representations},
-  author={Author 1, Author 2, Author 3},
+  author={Ziad Al-Haj Hemidi and Christian Weihsbach and Mattias P. Heinrich},
   booktitle={MICCAI},
   year={2024}
 }

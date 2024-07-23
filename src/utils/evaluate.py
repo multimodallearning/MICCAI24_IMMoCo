@@ -47,11 +47,11 @@ def my_psnr(img1, img2, data_range=None, reduction="mean"):
         return (20 * torch.log10(max_pixel / torch.sqrt(mse))).mean()
 
 
-def sharpnes_metric(x: torch.Tensor) -> torch.Tensor:
-    """Compute sharpness metric between two arrays"""
-    import cpbd
+# def sharpnes_metric(x: torch.Tensor) -> torch.Tensor:
+#     """Compute sharpness metric between two arrays"""
+#     import cpbd
 
-    return cpbd.compute(x.squeeze().numpy() * 255.0, mode="sharpness")
+#     return cpbd.compute(x.squeeze().numpy() * 255.0, mode="sharpness")
 
 
 def calmetric2D(pred_recon, gt_recon):
